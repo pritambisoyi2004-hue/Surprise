@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday Darling ❤️</title>
+
+<style>
+body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-family:'Segoe UI',sans-serif;
+    background:linear-gradient(135deg,#ff758c,#ff7eb3,#a18cd1);
+    overflow:hidden;
+    color:white;
+    text-align:center;
+}
+.box{animation:fade 1.2s ease;}
+h1{font-size:2.3em;text-shadow:0 0 15px #fff;}
+p{font-size:1.2em;}
+
+button{
+    margin-top:20px;
+    padding:12px 35px;
+    font-size:1.1em;
+    border:none;
+    border-radius:30px;
+    background:linear-gradient(45deg,#ff4d6d,#ffb3c6);
+    color:white;
+    cursor:pointer;
+    box-shadow:0 0 20px rgba(255,255,255,0.6);
+}
+button:hover{transform:scale(1.08);}
+
+@keyframes fade{
+    from{opacity:0;transform:scale(0.9);}
+    to{opacity:1;transform:scale(1);}
+}
+
+/* floating hearts */
+.heart{
+    position:absolute;
+    animation:float 5s linear infinite;
+}
+@keyframes float{
+    0%{transform:translateY(100vh);opacity:1;}
+    100%{transform:translateY(-10vh);opacity:0;}
+}
+
+/* cake & candle */
+.cake-wrap{
+    position:relative;
+    display:inline-block;
+}
+.cake{
+    width:240px;
+    border-radius:20px;
+    box-shadow:0 0 25px rgba(255,255,255,0.7);
+}
+.candle{
+    position:absolute;
+    top:-28px;
+    left:50%;
+    transform:translateX(-50%);
+    font-size:42px;
+    animation:flicker 1s infinite;
+}
+@keyframes flicker{
+    0%{opacity:1;}
+    50%{opacity:0.6;}
+    100%{opacity:1;}
+}
+
+/* heartbeat */
+.heartbeat{
+    animation:heartbeat 1.3s infinite;
+}
+@keyframes heartbeat{
+    0%{transform:scale(1);}
+    25%{transform:scale(1.1);}
+    40%{transform:scale(1);}
+    60%{transform:scale(1.15);}
+    100%{transform:scale(1);}
+}
+
+/* slideshow */
+.photo{
+    width:240px;
+    border-radius:20px;
+    box-shadow:0 0 25px rgba(255,255,255,0.7);
+    animation:photoFade 1s ease;
+}
+@keyframes photoFade{
+    from{opacity:0;transform:scale(0.9);}
+    to{opacity:1;transform:scale(1);}
+}
+</style>
+</head>
+
+<body>
+
+<audio id="music" src="music.mp3" loop></audio>
+
+<div class="box" id="content">
+    <h1>Hey Darling ❤️</h1>
+    <p> A Special Surprise✨</p>
+    <button onclick="start()">Start 💖</button>
+</div>
+
+<script>
+let photos=["pic1.jpg","pic2.jpg","pic3.jpg"];
+let index=0, slideTimer;
+
+function start(){
+    music.play();
+    content.innerHTML=`
+    <h1>It's 22 February 🎂</h1>
+    <p>A Very Special Day 💕</p>
+    <button onclick="wishPage()">Next 💋</button>`;
+}
+
+function wishPage(){
+    content.innerHTML=`
+    <h1>Make a Wish 💫</h1>
+    <div class="cake-wrap">
+        <img src="cake.png" class="cake">
+        <div class="candle" id="candle">🔥</div>
+    </div>
+    <p>Wish karo aur candle blow karo 💨</p>
+    <button onclick="blowCandle()">Blow the Candle 💨</button>`;
+}
+
+function blowCandle(){
+    document.getElementById("candle").innerHTML="💨";
+    setTimeout(()=>{
+        content.innerHTML+=`
+        <br>
+        <button onclick="cutCake()">Cut the Cake 🎂🔪</button>`;
+    },600);
+}
+
+function cutCake(){
+    content.innerHTML=`
+    <h1>Cake Cut Time 🎉</h1>
+    <img src="cake.png" class="cake"><br>
+    <button onclick="photoPage()">Next 💖</button>`;
+}
+
+function photoPage(){
+    content.innerHTML=`
+    <h1 class="heartbeat">My Gulugula ❤️</h1>
+    <img id="slide" src="pic1.jpg" class="photo"><br><br>
+    <button onclick="finalPage()">One Last 💞</button>`;
+    slideTimer=setInterval(()=>{
+        index=(index+1)%photos.length;
+        slide.src=photos[index];
+    },5000);
+}
+
+function finalPage(){
+    clearInterval(slideTimer);
+    content.innerHTML=`
+    <h1>Happy Birthday Darling 🎉</h1>
+    <p>I Love You So Much ❤️💋</p>
+    <p>Always Yours 💖</p>`;
+}
+
+setInterval(()=>{
+    let h=document.createElement("div");
+    h.className="heart";
+    h.innerHTML="❤️";
+    h.style.left=Math.random()*100+"vw";
+    h.style.fontSize=(Math.random()*25+15)+"px";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),5000);
+},300);
+</script>
+
+</body>
+</html>
